@@ -11,9 +11,11 @@ tokenized = custom_sent_tokenizer.tokenize(sample_text)
 
 def process_content():
     try:
-        for i in tokenized:
+        for i in tokenized[5:]:
             words = nltk.word_tokenize(i)
-            chunkGram = r"""Chunk: {<RB.?>*<VB.?>*<NNP>+<NN>?}"""
+            # chunkGram = r"""Chunk: {<RB.?>*<VB.?>*<NNP>+<NN>?}"""
+            chunkGram = r"""Chunk: {<.*>+}
+                                    }<VB.?|IN|DT|TO>+{"""
             chunkParser = nltk.RegexpChunkParser(chunkGram)
             chunked = chunkParser.parse(tagged)
             chunked.draw()
